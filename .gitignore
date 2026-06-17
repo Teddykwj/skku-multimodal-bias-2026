@@ -1,0 +1,19 @@
+# Jupyter
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 대용량 모델 파일 (HuggingFace Hub에 별도 저장)
+*.safetensors
+*.bin
+*.gguf
+
+# 외부 데이터셋
+bbq_data/
+*.zip
+
+# 학습 체크포인트
+qwen_qlora/
