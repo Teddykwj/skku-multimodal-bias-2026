@@ -10,7 +10,8 @@ from qwen_vl_utils import process_vision_info
 
 os.environ["HF_HOME"] = "/workspace/hf_cache"
 os.environ["HF_HUB_DISABLE_XET"] = "1"
-os.environ["HF_TOKEN"] = "hf_실제토큰값"  # ← 교체
+if "HF_TOKEN" not in os.environ:
+    raise EnvironmentError("HF_TOKEN 환경변수를 설정하세요: export HF_TOKEN=hf_...")
 
 DATA_DIR      = "/workspace/data/test"
 TEST_CSV      = f"{DATA_DIR}/test.csv"
