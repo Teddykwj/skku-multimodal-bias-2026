@@ -5,7 +5,6 @@ import pandas as pd
 from pathlib import Path
 from tqdm import tqdm
 from transformers import AutoProcessor, BitsAndBytesConfig, Qwen2_5_VLForConditionalGeneration
-from peft import PeftModel
 from qwen_vl_utils import process_vision_info
 
 os.environ["HF_HOME"] = "/workspace/hf_cache"
@@ -16,28 +15,26 @@ if "HF_TOKEN" not in os.environ:
 DATA_DIR      = "/workspace/data/test"
 TEST_CSV      = f"{DATA_DIR}/test.csv"
 IMAGE_DIR     = f"{DATA_DIR}/images"
-OUTPUT_CSV    = "/workspace/submission.csv"
+OUTPUT_CSV    = "/workspace/submission_a.csv"
 BASE_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
-ADAPTER_ID    = "teddykwj/qwen-bbq-lora"
-BATCH_SIZE    = 4  # OOM 시 2로 줄이기
+BATCH_SIZE    = 4
 
 assert Path(TEST_CSV).exists(),  f"❌ test.csv 없음: {TEST_CSV}"
 assert Path(IMAGE_DIR).exists(), f"❌ images 폴더 없음: {IMAGE_DIR}"
 
-print("모델 로드 중...")
+print("모델 로드 중... [실험 A: LoRA 없음 + 4-bit]")
 bnb_config = BitsAndBytesConfig(
     load_in_4bit=True,
     bnb_4bit_compute_dtype=torch.float16,
     bnb_4bit_quant_type="nf4",
     bnb_4bit_use_double_quant=True,
 )
-base_model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
     BASE_MODEL_ID,
     quantization_config=bnb_config,
     device_map="auto",
     torch_dtype=torch.float16,
 )
-model = PeftModel.from_pretrained(base_model, ADAPTER_ID, token=os.environ["HF_TOKEN"])
 model.eval()
 processor = AutoProcessor.from_pretrained(BASE_MODEL_ID)
 processor.tokenizer.padding_side = "left"
