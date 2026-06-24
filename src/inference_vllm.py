@@ -16,7 +16,7 @@ from huggingface_hub import snapshot_download
 DATA_DIR      = "/workspace/data/test"
 TEST_CSV      = f"{DATA_DIR}/test.csv"
 IMAGE_DIR     = f"{DATA_DIR}/images"
-OUTPUT_CSV    = "/workspace/submission_vllm.csv"
+OUTPUT_CSV    = "/workspace/submission_v5.csv"
 BASE_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
 ADAPTER_ID    = "teddykwj/qwen-bbq-lora"
 ADAPTER_DIR   = "/workspace/hf_cache/bbq-lora"
@@ -81,7 +81,7 @@ if __name__ == "__main__":
         trust_remote_code=True,
         mm_processor_kwargs={
             "min_pixels": 256 * 28 * 28,
-            "max_pixels": 768 * 28 * 28,
+            "max_pixels": 1280 * 28 * 28,
         },
     )
     processor = AutoProcessor.from_pretrained(BASE_MODEL_ID)

@@ -1,5 +1,13 @@
 # Change Log
 
+## v5 — 0.9884166667
+- 파일: `inference_vllm.py`
+- v4 대비 변경: max_pixels `768×28×28` → `1280×28×28`
+- 결과: v4와 동일 → 이미지 해상도가 성능에 영향 없음
+- 교훈: 텍스트 context만으로 충분히 판단 가능, 이미지는 보조적 역할
+
+---
+
 ## v4 — 0.9884166667 ★ 현재 최고
 - 파일: `inference_vllm.py`
 - 모델: `Qwen/Qwen2.5-VL-7B-Instruct` + BBQ LoRA (`teddykwj/qwen-bbq-lora`)
