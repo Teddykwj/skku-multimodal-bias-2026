@@ -1,5 +1,18 @@
 # Change Log
 
+## v4 — 0.9884166667 ★ 현재 최고
+- 파일: `inference_vllm.py`
+- 모델: `Qwen/Qwen2.5-VL-7B-Instruct` + BBQ LoRA (`teddykwj/qwen-bbq-lora`)
+- 추론 엔진: **vLLM** (HuggingFace generate() → vLLM 교체)
+- 양자화: fp16 (dtype="float16")
+- max_model_len: 8192
+- 이미지 토큰 제한: min_pixels=256×28×28 / max_pixels=768×28×28
+- 소요 시간: ~34분 (기존 3.7시간 → 6배 빠름)
+- 변경 이유: 2차 평가 70분 제한 대응 + 이미지 해상도 정규화
+- 파싱 실패: 확인 필요
+
+---
+
 ## v3 — 0.9864166667
 - 파일: `inference_b.py`
 - 모델: `Qwen/Qwen2.5-VL-7B-Instruct` + BBQ LoRA (`teddykwj/qwen-bbq-lora`)
@@ -36,7 +49,7 @@
 
 ---
 
-## v1 — 0.98808 ★ 현재 최고
+## v1 — 0.98808
 - 모델: `Qwen/Qwen2.5-VL-7B-Instruct` + BBQ LoRA (`teddykwj/qwen-bbq-lora`)
 - 양자화: 4-bit (nf4, double quant)
 - 프롬프트: 단일 user 메시지, JSON 출력 (`{"reason": "...", "answer_id": "0"|"1"|"2"}`)
