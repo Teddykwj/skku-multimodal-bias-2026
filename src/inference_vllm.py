@@ -16,11 +16,11 @@ from huggingface_hub import snapshot_download
 DATA_DIR      = "/workspace/data/test"
 TEST_CSV      = f"{DATA_DIR}/test.csv"
 IMAGE_DIR     = f"{DATA_DIR}/images"
-OUTPUT_CSV    = "/workspace/submission_v5.csv"
+OUTPUT_CSV    = "/workspace/submission_v6.csv"
 BASE_MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
-ADAPTER_ID    = "teddykwj/qwen-bbq-lora"
-ADAPTER_DIR   = "/workspace/hf_cache/bbq-lora"
-CHUNK_SIZE    = 500
+ADAPTER_ID    = "Teddykwj/qwen-bbq-lora-v2"
+ADAPTER_DIR   = "/workspace/hf_cache/bbq-lora-v2"
+CHUNK_SIZE    = 100
 
 def make_input(processor, row):
     answers = json.loads(row["answers"])
@@ -74,6 +74,7 @@ if __name__ == "__main__":
     llm = LLM(
         model=BASE_MODEL_ID,
         enable_lora=True,
+        max_lora_rank=32,
         max_model_len=8192,
         dtype="float16",
         gpu_memory_utilization=0.85,
