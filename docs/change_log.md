@@ -1,5 +1,15 @@
 # Change Log
 
+## v6 — 실패 (미제출)
+- 어댑터: `teddykwj/qwen-bbq-lora-v2` (FFN 추가 학습)
+- 파싱 실패: 8,500개 / 8,500개 → 전부 label 2
+- 원인 1: vLLM `max_lora_rank` 기본값(16) < v2 rank(32) → `max_lora_rank=32` 추가로 해결
+- 원인 2: target_modules에 `gate_proj/up_proj/down_proj` 추가 시 visual encoder 레이어까지 학습됨 (동일 이름 공유)
+- 원인 3: FFN LoRA 과적합으로 모델 출력 완전 붕괴 (`'!!!!!!!'` 반복 출력)
+- 교훈: FFN 레이어 LoRA는 과적합 위험 높음. visual encoder 제외 필수 (regex target_modules 사용)
+
+---
+
 ## v5 — 0.9884166667
 - 파일: `inference_vllm.py`
 - v4 대비 변경: max_pixels `768×28×28` → `1280×28×28`
