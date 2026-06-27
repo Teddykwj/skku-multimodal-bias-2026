@@ -1,5 +1,14 @@
 # Change Log
 
+## v8 — 실패 (미제출)
+- 파일: `inference_vllm_v8.py`
+- 모델: `Qwen/Qwen2.5-VL-32B-Instruct-AWQ` (LoRA 없음)
+- 실패 원인 1: `max_tokens=64` 부족 → reason이 잘리면서 answer_id 미출력 → 파싱 실패 5,369개
+- 실패 원인 2 (수정 후): 32B AWQ 추론 시간 ~3~4시간 → 2차 평가 70분 제한 초과 (3~4배)
+- 교훈: 32B 모델은 A6000 48GB에서 2차 평가 시간 조건 불충족. max_tokens는 예상 출력 길이 여유 있게 설정 필요
+
+---
+
 ## v7 — 0.98825 (v4보다 하락)
 - 파일: `inference_vllm_v7.py`
 - 변경 1: 프롬프트 개선 (증거 기준 명시 / 고정관념 금지 명시)
